@@ -5,6 +5,15 @@ ehthumbs.db
 # Folder config file
 Desktop.ini
 
+# Tex build files
+
+enigma.aux
+emigma.log
+enigma.out
+enigma.toc
+enigma.pdf
+enigma.synctex.gz
+
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
