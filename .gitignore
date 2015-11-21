@@ -50,3 +50,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+intro/intro.log
+texput.log
+*.pygtex
+_minted-enigma/default.pygstyle
