@@ -14,6 +14,8 @@
 \usepackage{multirow}
 \usepackage{longtable}
 \usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{minted}
 \usepackage[colorlinks=true,linkcolor=black]{hyperref}
 \defaultfontfeatures{Mapping=tex-text}
 \setromanfont[Mapping=tex-text]{Times New Roman}
@@ -46,6 +48,7 @@
 \newcommand{\coderoot}[1]{\texttt{\# #1}}
 \newcommand{\codeuser}[1]{\texttt{\$ #1}}
 \newcommand{\code}[1]{\texttt{#1}}
+\definecolor {bg} {rgb}{1.00, 1.00, 1.00}
 %
 % Title page
 %
@@ -62,7 +65,7 @@
 %
 \input {intro/intro}
 %
-\section{Μέρος 1ο: Εισαγωγή στην Κρυπτογραφία και στο Enigma}
+\section{Εισαγωγή στην Κρυπτογραφία}
 %
 Σε μια εποχή που οι υπολογιστές δεν είχαν ακόμα κάνει την εμφάνιση τους, πριν ακόμα και από τον πρώτο ηλεκτρονικό υπολογιστή (Eniac), μια μηχανή κρυπτογράφησης έθετε σε κίνδυνο την έκβαση του 2ου Παγκοσμίου Πολέμου: Βλέπετε, η μηχανή Enigma, μια εκπληκτική ηλεκτρομηχανική κατασκευή κρυπτογράφησης / αποκρυπτογράφησης, άνηκε στους Γερμανούς και χρησιμοποιούνταν για απόρρητη επικοινωνία των αρχηγείων με μονάδες στρατού και κυρίως υποβρύχια. Οι Γερμανοί τη θεωρούσαν απαραβίαστη – αλλά ευτυχώς για όλους μας, έκαναν λάθος.
 
@@ -78,14 +81,13 @@
 
 Μια διαφορετική – αλλά εξαιρετικά ασθενής κρυπτογράφηση – είναι ο αλγόριθμος του Καίσαρα: Σε αυτόν κάθε γράμμα του αλφαβήτου μετατοπίζεται ορισμένες θέσεις μπροστά ή πίσω. Είναι εξαιρετικά εύκολο να γράψετε ένα προγραμματάκι στην αγαπημένη σας γλώσσα προγραμματισμού (εννοούμε βέβαια την Python) που να το κάνει. Μη ξεχνάμε άλλωστε ότι χάρη στον κώδικα ASCII, το A έχει τιμή 65 και αν το μετατοπίσουμε 3 θέσεις δεξιά θα γίνει 68 δηλ. D. Το μόνο που έχετε να κάνετε λοιπόν είναι να χωρίσετε το μήνυμα σας σε γράμματα και να εφαρμόσετε το παραπάνω σε κάθε γράμμα. Δείτε:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 #! /usr/bin/env python
 #
 # Simple Caesar cipher
 # (shifts 3 places to the right)
 # we of course prefer Ceasar salads!
 #
-
 plaintext = raw_input("Enter text:")
 plaintext = plaintext.upper()
 ciphertext = ""
@@ -95,7 +97,7 @@ for letter in plaintext:
         newletter = newletter - 26
     ciphertext = ciphertext + chr(newletter)
 print ciphertext
-\end{verbatim}
+\end{minted}
 
 Αν στο πρόγραμμα μας δώσετε ως είσοδο τη λέξη KOLOKYTHI θα πάρετε την έξοδο NRORNBWKL. Ας το δούμε αυτό όμως λίγο καλύτερα:
 
@@ -112,7 +114,7 @@ N&R&O&R&N&B&W&K&L\\
 Παρατηρείτε κάτι; Ίδια γράμματα στο plaintext αντιστοιχούν πάντα στο ίδιο γράμμα στο κρυπτόγραμμα. Το O γίνεται πάντα R, το K γίνεται πάντα Ν. Δεν χρειάζεται καν να γράψετε ένα πρόγραμμα που να αποκωδικοποιεί δοκιμάζοντας όλες τις πιθανές μετατοπίσεις χαρακτήρων. Αρκεί να ξέρετε σε ποια γλώσσα είναι το μήνυμα. Για κάθε γλώσσα γνωρίζουμε ποιο είναι το  συχνότερα χρησιμοποιούμενο γράμμα. Π.χ. για τα Ελληνικά είναι το Α και για τα Αγγλικά το Ε.
  (διαβάστε εδώ: \url{http://el.wikipedia.org/wiki/Ανάλυση_Συχνότητας_Γλώσσας}). Με την προϋπόθεση ότι το μήνυμα μας έχει επαρκές μέγεθος, μπορούμε απλά να μετρήσουμε το γράμμα που εμφανίζεται ποιο συχνά και να βρούμε αμέσως το κλειδί! Αν δε με πιστεύετε, ορίστε ένα πρόγραμμα που μετράει τη συχνότητα γραμμάτων σε ένα αγγλικό κείμενο:
  
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 #! /usr/bin/env python
 thetext = raw_input("Enter text:")
 thetext = thetext.upper()
@@ -123,7 +125,7 @@ for letter in thetext:
       letterord -= 65
       frequencylist[letterord] += 1
 print frequencylist
-\end{verbatim}
+\end{minted}
 
 Δοκιμάστε να του δώσετε το παρακάτω σαν είσοδο:
 
@@ -141,7 +143,7 @@ IF THIS WORKS IT WILL PROVE THAT THE MOST COMMON LETTER USED IN THE ENGLISH LANG
 
 [ 2, 7, 3, 4, 9, 1]
 
-Θα δουλεύαμε κάπως έτσι: Το πρώτο γράμμα θα το μετατοπίζαμε 2 θέσεις δεξιά, το επόμενο 7, το μεθεπόμενο 3 κ.ο.κ. Όταν φτάσουμε στο τέλος του κλειδιού ξαναρχίζουμε από την αρχή. Για να γίνουμε πιο... μοντέρνοι, το πρόγραμμα μας δεν θα κάνει μετατοπίσεις τύπου Καίσαρα, αλλά θα χρησιμοποιεί τη συνάρτηση XOR. Τι; Δεν ξέρετε την XOR; Πρόκειται για τη λογική συνάρτηση της αποκλειστικής διάζευξης. Πάρτε ένα αριθμό, π.χ. το 65 που αντιπροσωπεύει το ASCII για το “A” και γράψτε τον στο δυαδικό:\\\\
+Θα δουλεύαμε κάπως έτσι: Το πρώτο γράμμα θα το μετατοπίζαμε 2 θέσεις δεξιά, το επόμενο 7, το μεθεπόμενο 3 κ.ο.κ. Όταν φτάσουμε στο τέλος του κλειδιού ξαναρχίζουμε από την αρχή. Για να γίνουμε πιο... μοντέρνοι, το πρόγραμμα μας δεν θα κάνει μετατοπίσεις τύπου Καίσαρα, αλλά θα χρησιμοποιεί τη συνάρτηση XOR. Τι; Δεν ξέρετε την XOR; Πρόκειται για τη λογική συνάρτηση της αποκλειστικής διάζευξης. Πάρτε ένα αριθμό, π.χ. το 65 που αντιπροσωπεύει το ASCII για το “A” και γράψτε τον στο δυαδικό:\\
 
 65
 \begin{center}
@@ -161,8 +163,7 @@ IF THIS WORKS IT WILL PROVE THAT THE MOST COMMON LETTER USED IN THE ENGLISH LANG
 \end{tabularx}
 \end{center}
 
-\begin{verbatim}
-
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 #! /usr/bin/env python
 
 key = [2, 7, 3, 4, 9, 1]
@@ -176,7 +177,7 @@ for letter in thetext:
     if keypos==6:
         keypos=0
 print ciphertext
-\end{verbatim}
+\end{minted}
 
 
 Αν δώσετε σαν plaintext τη λέξη KOLOKYTHI, θα πάρετε σαν αποτέλεσμα IHOKBXVOJ. Και αν δώσετε το IHOKBXVOJ σαν είσοδο, θα πάρετε τη λέξη KOLOKYTHI σαν αποτέλεσμα. Το κλειδί σας – που πρέπει να βρείτε τρόπο να στείλετε με ασφάλεια στον παραλήπτη – είναι το [2,7,3,4,9,1].
@@ -193,14 +194,16 @@ print ciphertext
 Το πρώτο πρόβλημα μπορούμε να το λύσουμε, κάνοντας το μέγεθος του κλειδιού τουλάχιστον όσο το μέγεθος του μηνύματος! Έτσι βέβαια θα μεγιστοποιήσουμε το δεύτερο πρόβλημα, αλλά θα έχουμε μια κρυπτογράφηση που δεν σπάει! Πρόκειται για το περίφημο \emph{one time pad} (\url{https://en.wikipedia.org/wiki/One-time_pad}) για το οποίο μπορείτε να διαβάσετε θαυμάσιες ιστορίες κατασκοπίας, καθώς σε αντίθεση με πολλές άλλες κρυπτογραφήσεις μπορεί άνετα να εφαρμοστεί με μοναδικό εξοπλισμό στυλό και χαρτί!
 
 Τώρα βέβαια – με εξαίρεση το one time pad που δεν είναι ιδιαίτερα πρακτικό για επικοινωνίες μεγάλης κλίμακας – οι άλλες κρυπτογραφήσεις  είτε δεν προσφέρουν καλή ασφάλεια είτε δεν μπορούν να εφαρμοστούν χωρίς τη βοήθεια κάποιου υπολογιστικού συστήματος, έστω και μικρής ισχύος. Ειδικά μιλώντας για τα σύγχρονα συστήματα κρυπτογράφησης – τα οποία χρησιμοποιούν\emph{ασυμμετρική κρυπτογράφηση}, δεν υπάρχει τρόπος να τα εφαρμόσουμε με μολύβι και χαρτί (αν και ο γραφικός χαρακτήρας του γράφοντος μπορεί να θεωρηθεί κρυπτογράφηση από μόνος του). Όμως την εποχή του Enigma δεν υπήρχε ούτε καν ο Eniac. Πως να φτιάξουμε μια πρακτική μηχανή κρυπτογράφησης (μικρή, σχετικά εύχρηστη, ασφαλής) χωρίς να χρησιμοποιήσουμε τίποτα από τα σύγχρονα ηλεκτρονικά;
-
+%
 \section{The Enigma Project -- Μέρος I}
-
+%
 Η μηχανή Enigma είναι μια ηλεκτρομηχανική κατασκευή και πράγματι για την ηλικία της είναι πολύ έξυπνα κατασκευασμένη. Η κρυπτογράφηση είναι συμμετρική και η πολυπλοκότητα της εξασφαλίζεται χάρη σε πολλαπλά κινούμενα μέρη.
 Ας δούμε όμως τα βασικά της τμήματα. Μια συσκευή Enigma περιέχει:
-
--photo-
-
+%
+\begin{center}
+  \includegraphics[width=0.4\textwidth]{images/main/enigma}
+\end{center}
+%
 \begin{itemize}
 \item Ένα πληκτρολόγιο αποκλειστικά με γράμματα (οι αριθμοί στέλνονταν ως κείμενο, το ίδιο και τα σημεία στίξης).
 \item Ένα panel με λαμπάκια (όχι LEDs, μη το τρέχετε, οι ημιαγωγοί δεν είχαν βρεθεί ακόμα!) τα οποία φωτίζουν αντίστοιχα γράμματα. Γνωστό και ως lampboard.
@@ -233,9 +236,11 @@ print ciphertext
 
 Είναι ένα εξαιρετικά απλό εξάρτημα αλλά και ιδιοφυές ταυτόχρονα. Φανταστείτε τον ρότορα σαν ένα κύλινδρο με 26 επαφές σε κάθε βάση, κυκλικά τοποθετημένες όπως φαίνεται στο σχήμα μας. Οι επαφές αυτές αποτελούν την είσοδο και έξοδο του ρότορα. Ας θεωρήσουμε τον κύλινδρο που βρίσκεται στο δεξιό άκρο της μηχανής μας. Οι επαφές στη δεξιά του βάση συνδέονται με το πληκτρολόγιο και οι αριστερές με τον επόμενο (μεσαίο κύλινδρο).  Όμως μη βιαστείτε να χωρίσετε τις επαφές σε εισόδους και εξόδους, καθώς οι ίδιες επαφές χρησιμοποιούνται και με την αντίστροφη κατεύθυνση για να ενεργοποιήσουν τα λαμπάκια του lampboard.
 
---photo--
+\begin{center}
+  \includegraphics[width=0.6\textwidth]{images/main/rotors}
+\end{center}
 
-Τι περιέχει μέσα του ένα ρότορας; Καλώδια που αντιστοιχούν τις δεξιές με τις αριστερές επαφές. Για να το δούμε καλύτερα, θα πρέπει να θεωρήσουμε μια επαφή του ρότορα ως την αρχή του, και θα την συμβολίσουμε με το “Α”. Αν πάρουμε ένα ρότορα τύπου ΙΙΙ, η καλωδίωση του είναι η παρακάτω:
+Τι περιέχει μέσα του ένας ρότορας; Καλώδια που αντιστοιχούν τις δεξιές με τις αριστερές επαφές. Για να το δούμε καλύτερα, θα πρέπει να θεωρήσουμε μια επαφή του ρότορα ως την αρχή του, και θα την συμβολίσουμε με το “Α”. Αν πάρουμε ένα ρότορα τύπου ΙΙΙ, η καλωδίωση του είναι η παρακάτω:
 
 \begin{center}
 \begin{tabularx}{\textwidth}{|*{26}{>{\centering\arraybackslash}X|}}
@@ -264,9 +269,11 @@ B&D&F&H&J&L&C&P&R&T&X&V&Z&N&Y&E&I&W&G&A&K&M&U&S&Q&O\\
 \subsection{Ρότορες σε Λειτουργία}
 
 Πιέζοντας το “Α” στο πληκτρολόγιο, το ρεύμα διέρχεται από την πρώτη επαφή του δεξιού ρότορα, κινείται μέσα από τις καλωδιώσεις των άλλων δύο και ανακλάται από το reflector. Ακολουθεί αντίστροφη πορεία και ανάβει το λαμπάκι “G”. Πιέζοντας το “Α” για δεύτερη φορά, το αποτέλεσμα είναι διαφορετικό καθώς ο δεξιός ρότορας περιστρέφεται αλλάζοντας τη διαδρομή του ρεύματος (πηγή: wikipedia).
-
--- photo --
-
+%
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{images/main/rotor-work}
+\end{center}
+%
 \subsection{Enigma Simulator – Πρώτη απόπειρα}
 
 Θα δημιουργήσουμε την απλούστερη δυνατή μηχανή Enigma, που  περιέχει μόνο ένα δεξιό ρότορα τύπου ΙΙΙ και ένα ανακλαστήρα τύπου Β. Σίγουρα δεν είναι ασφαλής, αλλά είναι μια αρχή για να προχωρήσουμε.
@@ -275,7 +282,7 @@ B&D&F&H&J&L&C&P&R&T&X&V&Z&N&Y&E&I&W&G&A&K&M&U&S&Q&O\\
 
 Ας ξεκινήσουμε από τον ανακλαστήρα. Περιέχει μια απλή λίστα με αντιστοιχίες ακροδεκτών. Στην κλάση μας προβλέψαμε τα δύο πιο συνηθισμένα είδη ανακλαστήρων, τα τύπου “Β” και τύπου “C” - η μόνη τους διαφορά είναι οι αντιστοιχίες:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 class Reflector(object):
     def __init__(self, type='B'):
         self.type = type
@@ -293,15 +300,14 @@ class Reflector(object):
     def reflect(self, position):
         if position >=0 and position <=25:
             return self.reflection_table[position]
-
-\end{verbatim}
+\end{minted}
 
 Προφανώς η μόνη λειτουργία που εκτελεί αυτό το απλό εξάρτημα είναι η reflect. Για παράδειγμα:
 
-\begin{verbatim}
-thereflector=Reflector(“B”)
+\begin{minted}[bgcolor=bg,  frame=lines, framesep=10pt]{python}
+thereflector = Reflector(“B”)
 output = thereflector(0)
-\end{verbatim}
+\end{minted}
 
 Εδώ ζητάμε από τον ανακλαστήρα την... ανάκλαση της επαφής 0, που αντιστοιχεί στο “Α” και το αποτέλεσμα θα είναι 24, που αντιστοιχεί στο “Y”.
 
@@ -321,7 +327,7 @@ output = thereflector(0)
 \item Τέλος, καλό είναι να μπορούμε να τον ρωτήσουμε σε ποια θέση βρίσκεται.
 \end{itemize}
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 class Rotor(object):
     def __init__(self, startposition,placement):
        self.letter_ring = [ 'A', 'B', 'C', 'D', 'E',
@@ -330,33 +336,35 @@ class Rotor(object):
                         'P', 'Q', 'R', 'S', 'T',
                         'U', 'V', 'W', 'X', 'Y', 'Z']
        self.placement = placement
-\end{verbatim}
+\end{minted}
 
 Το letter\_ring είναι ο δακτύλιος με τα γράμματα που μας επιτρέπει να βλέπουμε μεταξύ άλλων σε ποια αρχική θέση έχουμε τοποθετήσει το ρότορα μας. Μια τυπική μηχανή Enigma έχει τρεις ρότορες και εδώ το placement δείχνει αν ο ρότορας μας είναι τοποθετημένος αριστερά (left), στη μέση (middle) ή δεξιά (right). Αν είναι δεξιά, περιστρέφεται αυτόματα σε κάθε πίεση πλήκτρου.
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
        self.position = ord(startposition) – 65
-\end{verbatim}
+\end{minted}
 
 Τη θέση τη δίνουμε σε μορφή γράμματος, “Α” - “Ζ” αλλά τη μετατρέπουμε σε αριθμό από 0 – 25
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
        for i in range(0, self.position):
            self.rotate()
-\end{verbatim}
+\end{minted}
 
 Περιστρέφουμε το ρότορα μια-μια θέση μέχρι να φτάσει στην αρχική θέση που δώσαμε. Δεν είναι αποδοτικό, αλλά μοιάζει πολύ στην original μηχανή!
 
 Και εδώ βλέπουμε τη συνάρτηση που κάνει την περιστροφή, τόσο για να πάμε χειροκίνητα στην αρχική θέση όσο και κατά τη διάρκεια της κρυπτογράφησης. Λογικό είναι όταν ο ρότορας περιστραφεί μέχρι το “Z” (25), επιστρέφει στο “Α” (0):
 
-\begin{verbatim}
+\small
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
     def rotate(self):
         self.position +=1
         if self.position == 26:
             self.position = 0
-	  self.connections = self.connections[1:]+self.connections[0:1]
+        self.connections = self.connections[1:]+self.connections[0:1]
         self.letter_ring = self.letter_ring[1:] + self.letter_ring[0:1]
-\end{verbatim}
+\end{minted}
+\normalsize
 
 Το self.connections δεν το έχουμε δει ακόμα, αλλά είναι η λίστα που περιέχει τις αντιστοιχίες των ακροδεκτών. Προσέξτε τι γίνεται στην περιστροφή. Ένας ρότορας στη θέση “Α”, έχει τις αντιστοιχίες που είδαμε παραπάνω:
 
@@ -368,52 +376,52 @@ class Rotor(object):
 
 Ο ακροδέκτης μηδέν είναι ο “Β”. Πρέπει να περιστρέψουμε ταυτόχρονα  τη λίστα με τα γράμματα (letter\_ring) και τις αντιστοιχίες (connection) το οποίο λόγω της Python γίνεται εξαιρετικά εύκολα:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 self.letter_ring = self.letter_ring[1:] + self.letter_ring[0:1]
-\end{verbatim}
+\end{minted}
 
 self.letter\_ring[1:] μας δίνει τη λίστα ξεκινώντας από το δεύτερο στοιχείο της και στην άκρη προσθέτουμε ξανά το πρώτο γράμμα self.letter\_ring[0:1].
 
 Και πάμε στην κρυπτογράφηση από δεξιά προς αριστερά που είναι εύκολη:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
     def cipher(self, letter):
         if self.placement == 'Right':
             self.rotate()
-\end{verbatim}
+\end{minted}
 
 Αν ο ρότορας είναι ο δεξιός, τον περιστρέφουμε πριν κάνουμε οτιδήποτε.
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
         inputletter = self.letter_ring[letter]
         outputletter = self.connections[letter]
-\end{verbatim}
+\end{minted}
 
 Το letter στην πραγματικότητα είναι ο αριθμός του ακροδέκτη που ενεργοποιείται. Έχει μια τιμή από 0-25. Στο inputletter και outputletter έχουμε τα αντίστοιχα γράμματα σύμφωνα με τις λίστες αντιστοιχιών. Όμως αυτό που πραγματικά μας ενδιαφέρει είναι σε ποιο ακροδέκτη της δεξιάς βάσης καταλήγει το σήμα εξόδου, γιατί και στον επόμενο ρότορα θα δώσουμε είσοδο με βάση τον αριθμό αυτό:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
         outputindex = self.letter_ring.index(outputletter)
-\end{verbatim}
+\end{minted}
 
 Τέλος επιστρέφουμε ότι υπολογίσαμε:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
         return (inputletter, outputletter, outputindex)
-\end{verbatim}
+\end{minted}
 
 Εντελώς αντίστοιχα έχουμε την αντίστροφη κρυπτογράφηση (από δεξιά προς αριστερά):
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
     def reflectCipher(self, letter):
         inputletter = self.letter_ring[letter]
         outputindex = self.connections.index(inputletter)
         outputletter = self.letter_ring[outputindex]
         return (inputletter, outputletter, outputindex)
-\end{verbatim}
+\end{minted}
 
 Όλο το παραπάνω ήταν φυσικά ένα superclass που καλύπτει κάθε πιθανό τύπο ρότορα. Αλλά για να φτιάξουμε ένα type III Rotor, δεν χρειαζόμαστε τίποτα άλλο από τη λίστα αντιστοιχιών:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 class RotorIII(Rotor):
     def __init__(self, startposition,placement='Right'):
         self.connections  = ['B','D','F','H','J','L','C',
@@ -422,16 +430,18 @@ class RotorIII(Rotor):
                              'M','U','S','Q','O']
 
         super(RotorIII,self).__init__(startposition,placement)
-\end{verbatim}
+\end{minted}
 
 Το πρόγραμμα αυτό θα το βρείτε στο site. Δείτε το αποτέλεσμα που έχει για την λέξη HELLO. Δοκιμάστε να δώσετε το αποτέλεσμα σαν είσοδο για να βεβαιωθείτε ότι κάνει αποκρυπτογράφηση. Δοκιμάστε να δώσετε πολλαπλές φορές το ίδιο γράμμα. Τι θα γίνει αν προσπαθήσετε να κρυπτογραφήσετε ένα string από 26 “Α”; Προκύπτει ποτέ το “Α” στην έξοδο; Όχι! Μόλις ανακαλύψατε ένα βασικό πρόβλημα του Enigma: ένα γράμμα δεν κρυπτογραφείται ποτέ στον εαυτό του. Και αυτό φίλοι μου ήταν αρκετό για να σπάσει η κρυπτογράφηση!
 
 \subsection{Plugboard}
 
 Το σύστημα αυτό με τα καλώδια βρίσκεται στο εμπρός μέρος της μηχανής. Διατίθενται 10 ζεύγη καλωδίων που ενώνουν γράμματα μεταξύ τους. Εδώ βλέπουμε δύο μόνο συνδέσεις. Αν κάπου δεν υπάρχει καλώδιο το γράμμα απλά αντιστοιχίζεται στο εαυτό του (πηγή: wikipedia).
-
--- photo --
-
+%
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{images/main/plugboard}
+\end{center}
+%
 \section{The Enigma Project -- Mέρος II}
 
 Στο προηγούμενο άρθρο μας ξεκινήσαμε την εξομοίωση της θρυλικής ηλεκτρομηχανικής συσκευής κρυπτογράφησης Enigma, κάνοντας την πρώτη μας απόπειρα για την απλούστερη υλοποίηση: μια μηχανή με ένα ρότορα και ένα ανακλαστήρα. Σε python φυσικά! Ήδη από την πρώτη αυτή υλοποίηση διαπιστώσαμε ένα σοβαρό μειονέκτημα της μηχανής (το οποίο σας διαβεβαιώνουμε, δεν διορθώνεται όσους ρότορες και αν βάλετε): Ένα γράμμα δεν κρυπτογραφείται ποτέ στον εαυτό του! Ίσως φαίνεται  λεπτομέρεια, όμως κάποιες τέτοιες φαινομενικά ασήμαντες διαπιστώσεις προκαλούν τελικά την κατάρρευση των καλύτερων συστημάτων κρυπτογράφησης. 
@@ -473,7 +483,8 @@ class RotorIII(Rotor):
 
 Πριν όμως ξεκινήσουμε με το RotorAssembly, θα πρέπει να ορίσουμε τα άλλα δύο είδη από ρότορες που θα χρησιμοποιήσουμε, το Type II και το Type I. Κάτι αρκετά εύκολο, γιατί έχουμε ήδη το class και το μόνο που αλλάζει είναι η λίστα των αντιστοιχιών:
 
-\begin{verbatim}
+\small
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 class RotorII(Rotor):
     def __init__(self,startposition,placement='Middle'):
         self.connections = ['A', 'J', 'D', 'K', 'S', 'I', 'R', 'U',
@@ -490,11 +501,13 @@ class RotorI(Rotor):
                               'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R',
                               'C', 'J' ]
         super(RotorI,self).__init__(startposition,placement)
-\end{verbatim}
+\end{minted}
+\normalsize
 
 Και το απλό μας RotorAssembly:
 
-\begin{verbatim}
+\small
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 class RotorAssembly(object):
     def __init__(self, startposition_left='Α', startposition_middle='Α',
 	           startposition_right='Α', reflectortype='B'):
@@ -502,19 +515,20 @@ class RotorAssembly(object):
         self.rotor_m = RotorII(startposition_middle, 'Middle')
         self.rotor_l = RotorI(startposition_left, 'Left')
         self.reflector = Reflector(reflectortype)
-\end{verbatim}
+\end{minted}
+\normalsize
 
 Παρατηρήστε ότι δίνουμε και κάποιες default τιμές στην init, ώστε κάποιος να μπορεί να δημιουργήσει ένα RotorAssembly  έτσι:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 assembly = RotorAssembly()
-\end{verbatim}
+\end{minted}
 
 οπότε οι τρεις ρότορες θα αρχικοποιηθούν στις θέσεις “Α”, “Α”, και\ldots “Α” και ο ανακλαστήρας θα είναι τύπου “B”. Ή μπορεί κάποιος να χρησιμοποιήσει τις δικές του τιμές:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 assembly = RotorAssembly('A', 'D', 'T', 'B')
-\end{verbatim}
+\end{minted}
 
 Όπως βλέπετε, το assembly μας περιέχει ένα ρότορα τύπου ΙΙΙ δεξιά, ένα τύπου ΙΙ στη μέση και ένα τύπου Ι αριστερά.  Φυσικά μπορείτε να αλλάξετε τις θέσεις τους αν θέλετε, αλλά μας βολεύει για να ελέγχουμε την κρυπτογράφηση μας με βάση κάποια άλλη εξομοίωση, όπως αυτή που θα βρείτε στο \url{http://enigmaco.de/enigma/} χωρίς να χρειαστεί να αλλάζουμε τα defaults.
 
@@ -522,44 +536,48 @@ assembly = RotorAssembly('A', 'D', 'T', 'B')
 
 Θα αποθηκεύσουμε το ciphertext στην λίστα crypto:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 crypto = []
-\end{verbatim}
+\end{minted}
 
 Επεξεργαζόμαστε το μήνυμα γράμμα – γράμμα:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 for letter in themessage:
-\end{verbatim}
+\end{minted}
 
 Με τις παρακάτω τρεις κλήσεις κάνουμε την κανονική (από δεξιά προς τα αριστερά) κρυπτογράφηση στους τρεις ρότορες:
 
-\begin{verbatim}
+\footnotesize
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
   (inputletter, outputletter, outpos) = self.rotor_r.cipher(ord(letter)-65)
   (inputletter, outputletter, outpos) = self.rotor_m.cipher(outpos)
   (inputletter, outputletter, outpos) = self.rotor_l.cipher(outpos)
-\end{verbatim}
+\end{minted}
+\normalsize
 
 Φτάνουμε στον ανακλαστήρα:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 outpos = self.reflector.reflect(outpos)
-\end{verbatim}
+\end{minted}
 
 Επιστρέφουμε και κάνουμε την αντίστροφη κρυπτογράφηση (από αριστερά προς τα δεξιά):
 
-\begin{verbatim}
+\footnotesize
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
   (inputletter, outputletter, outpos) = self.rotor_l.reflectCipher(outpos)
   (inputletter, outputletter, outpos) = self.rotor_m.reflectCipher(outpos)
   (inputletter, outputletter, outpos) = self.rotor_r.reflectCipher(outpos)
-\end{verbatim}
+\end{minted}
+\normalsize
 
 Τελικά έχουμε το κρυπτογραφημένο μας γράμμα το οποίο τυπώνουμε και αποθηκεύουμε στη λίστα:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
   print chr(outpos+65)
   crypto.append(chr(outpos+65))
-\end{verbatim}
+\end{minted}
 
 Αν δοκιμάσετε τώρα να το τρέξετε με είσοδο “ΑΑΑΑΑ” (όπως σας το δίνουμε στο αρχείο) θα πάρετε την κρυπτογραφημένη έκδοση “BDZGO” η οποία όπως θα διαπιστώσετε αν διαβάσετε το άρθρο στην wikipedia (\url{http://en.wikipedia.org/wiki/Enigma_rotor_details}) ή στον εξομοιωτή που αναφέραμε, είναι το σωστό! Success. Αλλά μη βιάζεστε. Το ίδιο βιάζονταν και οι Γερμανοί και είδατε τι έπαθαν\ldots
 
@@ -577,37 +595,35 @@ outpos = self.reflector.reflect(outpos)
 
 Στους ρότορες φανταστείτε ότι οι εγκοπές βρίσκονται ανάμεσα στα γράμματα (π.χ. για τον Type III η εγκοπή βρίσκεται ανάμεσα στα V και W) αλλά φυσικά στο πρόγραμμα μας δεν μπορούμε να κάνουμε κάτι τέτοιο. Χρησιμοποιούμε τα γράμματα προορισμού για τις εγκοπές. Θα δείτε λοιπόν ότι σε κάθε ρότορα έχουμε προσθέσει μια γραμμή σαν τη παρακάτω:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 self.notch = 'W'
-\end{verbatim}
+\end{minted}
 
 Στο Rotor class έχουμε προσθέσει δύο συναρτήσεις που μας επιτρέπουν να δούμε αν είμαστε ακριβώς πριν το γράμμα που έχουμε ορίσει ως notch ή αν το έχουμε φτάσει:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
     def justBeforeNotch(self):
         if self.letter_ring[0] == chr(ord(self.notch)-1):
             return True
         else:
             return False
 
-
     def reachedNotch(self):
         if self.letter_ring[0] == self.notch:
             return True
         else:
             return False
-\end{verbatim}
+\end{minted}
 
+Και \emph{φαίνεται} (δώστε έμφαση στα πλάγια γράμματα) πως το μόνο που μένει είναι να φτιάξουμε λίγο το προηγούμενο μας κώδικα ώστε να ελέγχει πότε φτάνουν οι ρότορες στην εγκοπή για να ενεργοποιείται η περιστροφή του επόμενου ρότορα. Κάτι σαν το παρακάτω δηλαδή (το πλήρες πρόγραμμα είναι το enigma-stepping1.py):
 
-Και φαίνεται (δώστε έμφαση στα πλάγια γράμματα) πως το μόνο που μένει είναι να φτιάξουμε λίγο το προηγούμενο μας κώδικα ώστε να ελέγχει πότε φτάνουν οι ρότορες στην εγκοπή για να ενεργοποιείται η περιστροφή του επόμενου ρότορα. Κάτι σαν το παρακάτω δηλαδή (το πλήρες πρόγραμμα είναι το enigma-stepping1.py):
-
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 if self.rotor_r.reachedNotch():
     self.rotor_m.rotate()
 
 if self.rotor_m.reachedNotch():
     self.rotor_l.rotate()
-\end{verbatim}
+\end{minted}
 
 Ωραία λοιπόν, εκτελέστε το πρόγραμμα enigma-stepping1.py. Σε αυτό έχουμε δώσει ως αρχικές τιμές στους ρότορες τις “A”, “A” και “Τ” και για μήνυμα τα γνωστά μας πέντε “Α”. Τι απάντηση πήρατε;
 
@@ -639,7 +655,7 @@ if self.rotor_m.reachedNotch():
 
 Το πρόγραμμα μας είναι το enigma-stepping2.py και περιέχει τις παρακάτω αλλαγές:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, linenos, frame=lines, framesep=10pt]{python}
 just_rotated = False
 for letter in themessage:
   if self.rotor_m.justBeforeNotch():
@@ -648,11 +664,11 @@ for letter in themessage:
     just_rotated = True
     if showoutput:
       print "DS"
- else:
+  else:
     just_rotated = False
     if showoutput:
       print
-\end{verbatim}
+\end{minted}
 
 Αν ο μεσαίος ρότορας είναι ακριβώς πριν την εγκοπή, τον περιστρέφουμε άμεσα στο επόμενο πάτημα πλήκτρου. Γιατί το κάνουμε αυτό στην αρχή όμως και όχι μετά την περιστροφή του δεξιού ρότορα όπως θα ήταν πιο σωστό;
 
@@ -660,10 +676,10 @@ for letter in themessage:
 
 Για την περίπτωση αυτή φυσικά πρέπει προσέξουμε να μη τον περιστρέψουμε ξανά παρακάτω:
 
-\begin{verbatim}
+\begin{minted}[bgcolor=bg, frame=lines, framesep=10pt]{python}
 if self.rotor_r.reachedNotch() and not just_rotated:
   self.rotor_m.rotate()
-\end{verbatim}
+\end{minted}
 
 Δοκιμάστε τώρα αυτή την εκδοχή με τις αρχικές θέσεις που δώσαμε παραπάνω και επιβεβαιώστε τα αποτελέσματα. 
 
