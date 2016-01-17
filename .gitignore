@@ -55,3 +55,4 @@ texput.log
 *.pygtex
 _minted-enigma/default.pygstyle
 *.pygstyle
+enigma-beta.pdf
